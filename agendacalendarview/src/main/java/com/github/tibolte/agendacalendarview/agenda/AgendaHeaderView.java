@@ -44,14 +44,14 @@ public class AgendaHeaderView extends LinearLayout {
 
     // region Public methods
 
-    public void setDay(Calendar day, int currentDayTextColor) {
+    public void setDay(Calendar day, int currentDayTextColor, boolean showBadge) {
         TextView txtDayOfMonth = (TextView) findViewById(R.id.view_agenda_day_of_month);
         TextView txtDayOfWeek = (TextView) findViewById(R.id.view_agenda_day_of_week);
         View circleView = findViewById(R.id.view_day_circle_selected);
 
         Calendar today = CalendarManager.getInstance().getToday();
 
-        SimpleDateFormat dayWeekFormatter =  new SimpleDateFormat(getContext().getString(R.string.day_name_format), CalendarManager.getInstance().getLocale());;
+        SimpleDateFormat dayWeekFormatter =  new SimpleDateFormat(getContext().getString(R.string.day_name_format), CalendarManager.getInstance().getLocale());
 
         txtDayOfMonth.setTextColor(getResources().getColor(R.color.calendar_text_default));
         txtDayOfWeek.setTextColor(getResources().getColor(R.color.calendar_text_default));
@@ -61,7 +61,12 @@ public class AgendaHeaderView extends LinearLayout {
             circleView.setVisibility(VISIBLE);
             GradientDrawable drawable = (GradientDrawable) circleView.getBackground();
             drawable.setStroke((int) (2 * Resources.getSystem().getDisplayMetrics().density), currentDayTextColor);
-        } else {
+        } else if (showBadge) {
+            circleView.setVisibility(VISIBLE);
+            GradientDrawable drawable = (GradientDrawable) circleView.getBackground();
+            drawable.setStroke((int) (2 * Resources.getSystem().getDisplayMetrics().density), 0xffff0000);
+        }
+        else {
             circleView.setVisibility(INVISIBLE);
         }
 

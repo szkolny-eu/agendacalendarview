@@ -17,6 +17,10 @@ public interface CalendarEvent {
 
     void setId(long mId);
 
+    boolean getShowBadge();
+
+    void setShowBadge(boolean mShowBadge);
+
     Calendar getStartTime();
 
     void setStartTime(Calendar mStartTime);

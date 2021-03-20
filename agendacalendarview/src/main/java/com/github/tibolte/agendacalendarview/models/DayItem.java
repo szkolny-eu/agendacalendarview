@@ -17,6 +17,7 @@ public class DayItem implements IDayItem {
     private boolean mFirstDayOfTheMonth;
     private boolean mSelected;
     private String mMonth;
+    private boolean mShowBadge;
 
     // region Constructor
 
@@ -39,6 +40,7 @@ public class DayItem implements IDayItem {
         this.mFirstDayOfTheMonth = original.isFirstDayOfTheMonth();
         this.mSelected = original.isSelected();
         this.mMonth = original.getMonth();
+        this.mShowBadge = original.mShowBadge;
     }
     // endregion
 
@@ -98,6 +100,14 @@ public class DayItem implements IDayItem {
 
     public void setDayOftheWeek(int mDayOftheWeek) {
         this.mDayOfTheWeek = mDayOftheWeek;
+    }
+
+    public void setShowBadge(boolean showBadge) {
+        this.mShowBadge = showBadge;
+    }
+
+    public boolean getShowBadge() {
+        return this.mShowBadge;
     }
 
     // region Public methods

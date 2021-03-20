@@ -43,4 +43,7 @@ public interface IDayItem {
 
     IDayItem copy();
 
+    void setShowBadge(boolean showBadge);
+
+    boolean getShowBadge();
 }

@@ -76,6 +76,8 @@ public class BaseCalendarEvent implements CalendarEvent {
      */
     private double mTemperature;
 
+    private boolean mShowBadge;
+
     // region Constructor
 
     /**
@@ -91,7 +93,17 @@ public class BaseCalendarEvent implements CalendarEvent {
      * @param allDay      Int that can be equal to 0 or 1.
      * @param duration    The duration of the event in RFC2445 format.
      */
-    public BaseCalendarEvent(long id, int color, String title, String description, String location, long dateStart, long dateEnd, int allDay, String duration) {
+    public BaseCalendarEvent(
+            long id,
+            int color,
+            String title,
+            String description,
+            String location,
+            long dateStart,
+            long dateEnd,
+            int allDay,
+            String duration
+    ) {
         this.mId = id;
         this.mColor = color;
         this.mAllDay = (allDay == 1);
@@ -120,7 +132,15 @@ public class BaseCalendarEvent implements CalendarEvent {
      * @param endTime The end time of the event.
      * @param allDay Indicates if the event lasts the whole day.
      */
-    public BaseCalendarEvent(String title, String description, String location, int color, Calendar startTime, Calendar endTime, boolean allDay) {
+    public BaseCalendarEvent(
+            String title,
+            String description,
+            String location,
+            int color,
+            Calendar startTime,
+            Calendar endTime,
+            boolean allDay
+    ) {
         this.mTitle = title;
         this.mDescription = description;
         this.mLocation = location;
@@ -128,6 +148,28 @@ public class BaseCalendarEvent implements CalendarEvent {
         this.mStartTime = startTime;
         this.mEndTime = endTime;
         this.mAllDay = allDay;
+    }
+
+    public BaseCalendarEvent(
+            String title,
+            String description,
+            String location,
+            int color,
+            Calendar startTime,
+            Calendar endTime,
+            boolean allDay,
+            long id,
+            boolean showBadge
+    ) {
+        this.mTitle = title;
+        this.mDescription = description;
+        this.mLocation = location;
+        this.mColor = color;
+        this.mStartTime = startTime;
+        this.mEndTime = endTime;
+        this.mAllDay = allDay;
+        this.mId = id;
+        this.mShowBadge = showBadge;
     }
 
     public BaseCalendarEvent(BaseCalendarEvent calendarEvent) {
@@ -140,6 +182,7 @@ public class BaseCalendarEvent implements CalendarEvent {
         this.mLocation = calendarEvent.getLocation();
         this.mStartTime = calendarEvent.getStartTime();
         this.mEndTime = calendarEvent.getEndTime();
+        this.mShowBadge = calendarEvent.getShowBadge();
     }
 
     // endregion
@@ -203,6 +246,14 @@ public class BaseCalendarEvent implements CalendarEvent {
 
     public void setId(long mId) {
         this.mId = mId;
+    }
+
+    public boolean getShowBadge() {
+        return mShowBadge;
+    }
+
+    public void setShowBadge(boolean mShowBadge) {
+        this.mShowBadge = mShowBadge;
     }
 
     public String getLocation() {

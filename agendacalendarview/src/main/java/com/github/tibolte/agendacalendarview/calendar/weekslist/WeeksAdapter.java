@@ -169,6 +169,12 @@ public class WeeksAdapter extends RecyclerView.Adapter<WeeksAdapter.WeekViewHold
                     txtDay.setTextColor(mCurrentDayColor);
                 }
 
+                if (dayItem.getShowBadge()) {
+                    circleView.setVisibility(View.VISIBLE);
+                    GradientDrawable drawable = (GradientDrawable) circleView.getBackground();
+                    drawable.setStroke((int) (2 * Resources.getSystem().getDisplayMetrics().density), 0xffff0000);
+                }
+
                 // Show a circle if the day is selected
                 if (dayItem.isSelected()) {
                     txtDay.setTextColor(mDayTextColor);

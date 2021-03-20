@@ -184,9 +184,14 @@ public class CalendarManager {
         for (IWeekItem weekItem : getWeeks()) {
             for (IDayItem dayItem : weekItem.getDayItems()) {
                 boolean isEventForDay = false;
+                boolean isShowBadgeForDay = false;
                 for (CalendarEvent event : eventList) {
                     if (DateHelper.isBetweenInclusive(dayItem.getDate(), event.getStartTime(), event.getEndTime())) {
                         CalendarEvent copy = event.copy();
+
+                        if (copy.getShowBadge()) {
+                            isShowBadgeForDay = true;
+                        }
 
                         Calendar dayInstance = Calendar.getInstance();
                         dayInstance.setTime(dayItem.getDate());
@@ -211,6 +216,7 @@ public class CalendarManager {
                     copy.setPlaceholder(true);
                     getEvents().add(copy);
                 }
+                dayItem.setShowBadge(isShowBadgeForDay);
             }
         }
     }

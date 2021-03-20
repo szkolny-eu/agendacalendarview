@@ -51,7 +51,7 @@ public class AgendaAdapter extends BaseAdapter implements StickyListHeadersAdapt
         if (agendaHeaderView == null) {
             agendaHeaderView = AgendaHeaderView.inflate(parent);
         }
-        agendaHeaderView.setDay(getItem(position).getInstanceDay(), mCurrentDayColor);
+        agendaHeaderView.setDay(getItem(position).getInstanceDay(), mCurrentDayColor, getItem(position).getDayReference().getShowBadge());
         return agendaHeaderView;
     }
 
