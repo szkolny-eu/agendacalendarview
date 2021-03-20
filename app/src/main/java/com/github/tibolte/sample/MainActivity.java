@@ -1,5 +1,13 @@
 package com.github.tibolte.sample;
 
+import android.graphics.Color;
+import android.os.Bundle;
+import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+
 import com.github.tibolte.agendacalendarview.AgendaCalendarView;
 import com.github.tibolte.agendacalendarview.CalendarManager;
 import com.github.tibolte.agendacalendarview.CalendarPickerController;
@@ -10,27 +18,21 @@ import com.github.tibolte.agendacalendarview.models.IDayItem;
 import com.github.tibolte.agendacalendarview.models.IWeekItem;
 import com.github.tibolte.agendacalendarview.models.WeekItem;
 
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements CalendarPickerController {
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
-    @Bind(R.id.activity_toolbar)
+    @BindView(R.id.activity_toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.agenda_calendar_view)
+    @BindView(R.id.agenda_calendar_view)
     AgendaCalendarView mAgendaCalendarView;
 
     // region Lifecycle methods

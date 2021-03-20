@@ -10,7 +10,7 @@ import android.view.animation.Interpolator;
 /**
  * Floating action button helping to scroll back to the current date.
  */
-public class FloatingActionButton extends android.support.design.widget.FloatingActionButton {
+public class FloatingActionButton extends com.google.android.material.floatingactionbutton.FloatingActionButton {
     private static final int TRANSLATE_DURATION_MILLIS = 200;
 
     private boolean mVisible = true;
