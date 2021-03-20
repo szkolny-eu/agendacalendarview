@@ -35,7 +35,7 @@
             <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/img_location"/>
+                    android:src="@android:drawable/ic_dialog_map"/>
 
             <TextView
                     android:id="@+id/view_agenda_event_location"
