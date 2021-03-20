@@ -49,7 +49,7 @@ public class AgendaCalendarView extends FrameLayout implements StickyListHeaders
     private AgendaView mAgendaView;
     private FloatingActionButton mFloatingActionButton;
 
-    private int mAgendaCurrentDayTextColor, mCalendarHeaderColor, mCalendarBackgroundColor, mCalendarDayTextColor, mCalendarPastDayTextColor, mCalendarCurrentDayColor, mFabColor;
+    private int mAgendaCurrentDayTextColor, mCalendarHeaderColor, mCalendarHeaderTextColor, mCalendarBackgroundColor, mCalendarDayTextColor, mCalendarPastDayTextColor, mCalendarCurrentDayColor, mFabColor;
     private CalendarPickerController mCalendarPickerController;
 
     private ListViewScrollTracker mAgendaListViewScrollTracker;
@@ -94,6 +94,7 @@ public class AgendaCalendarView extends FrameLayout implements StickyListHeaders
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ColorOptionsView, 0, 0);
         mAgendaCurrentDayTextColor = a.getColor(R.styleable.ColorOptionsView_agendaCurrentDayTextColor, getResources().getColor(R.color.theme_primary));
         mCalendarHeaderColor = a.getColor(R.styleable.ColorOptionsView_calendarHeaderColor, getResources().getColor(R.color.theme_primary_dark));
+        mCalendarHeaderTextColor = a.getColor(R.styleable.ColorOptionsView_calendarHeaderTextColor, getResources().getColor(R.color.theme_text_icons));
         mCalendarBackgroundColor = a.getColor(R.styleable.ColorOptionsView_calendarColor, getResources().getColor(R.color.theme_primary));
         mCalendarDayTextColor = a.getColor(R.styleable.ColorOptionsView_calendarDayTextColor, getResources().getColor(R.color.theme_text_icons));
         mCalendarCurrentDayColor = a.getColor(R.styleable.ColorOptionsView_calendarCurrentDayTextColor, getResources().getColor(R.color.calendar_text_current_day));
@@ -120,7 +121,12 @@ public class AgendaCalendarView extends FrameLayout implements StickyListHeaders
         ColorStateList csl = new ColorStateList(new int[][]{new int[0]}, new int[]{mFabColor});
         mFloatingActionButton.setBackgroundTintList(csl);
 
-        mCalendarView.findViewById(R.id.cal_day_names).setBackgroundColor(mCalendarHeaderColor);
+        LinearLayout mDayNamesHeader = mCalendarView.findViewById(R.id.cal_day_names);
+        mDayNamesHeader.setBackgroundColor(mCalendarHeaderColor);
+        for (int i = 0; i < mDayNamesHeader.getChildCount(); i++) {
+            TextView txtDay = (TextView) mDayNamesHeader.getChildAt(i);
+            txtDay.setTextColor(mCalendarHeaderTextColor);
+        }
         mCalendarView.findViewById(R.id.list_week).setBackgroundColor(mCalendarBackgroundColor);
 
         mAgendaView.getAgendaListView().setOnItemClickListener((AdapterView<?> parent, View view, int position, long id) -> {
