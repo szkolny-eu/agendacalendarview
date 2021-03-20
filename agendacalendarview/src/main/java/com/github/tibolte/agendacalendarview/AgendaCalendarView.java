@@ -137,7 +137,7 @@ public class AgendaCalendarView extends FrameLayout implements StickyListHeaders
                     if (event instanceof Events.DayClickedEvent) {
                         mCalendarPickerController.onDaySelected(((Events.DayClickedEvent) event).getDay());
                     } else if (event instanceof Events.EventsFetched) {
-                        ObjectAnimator alphaAnimation = new ObjectAnimator().ofFloat(this, "alpha", getAlpha(), 1f).setDuration(500);
+                        ObjectAnimator alphaAnimation = ObjectAnimator.ofFloat(this, "alpha", getAlpha(), 1f).setDuration(500);
                         alphaAnimation.addListener(new Animator.AnimatorListener() {
                             @Override
                             public void onAnimationStart(Animator animation) {
