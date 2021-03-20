@@ -11,7 +11,6 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.animation.RotateAnimation;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
@@ -69,7 +68,7 @@ public class AgendaCalendarView extends FrameLayout implements StickyListHeaders
                 mFloatingActionButton.show();
             }
             //Log.d(LOG_TAG, String.format("Agenda listView scrollY: %d", scrollY));
-            int toAngle = scrollY / 100;
+            /*int toAngle = scrollY / 100;
             if (toAngle > mMaxAngle) {
                 toAngle = mMaxAngle;
             } else if (toAngle < -mMaxAngle) {
@@ -78,7 +77,7 @@ public class AgendaCalendarView extends FrameLayout implements StickyListHeaders
             RotateAnimation rotate = new RotateAnimation(mCurrentAngle, toAngle, mFloatingActionButton.getWidth() / 2, mFloatingActionButton.getHeight() / 2);
             rotate.setFillAfter(true);
             mCurrentAngle = toAngle;
-            mFloatingActionButton.startAnimation(rotate);
+            mFloatingActionButton.startAnimation(rotate);*/
         }
     };
 
