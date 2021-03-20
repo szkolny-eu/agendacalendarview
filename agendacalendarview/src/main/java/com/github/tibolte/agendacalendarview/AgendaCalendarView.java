@@ -199,7 +199,7 @@ public class AgendaCalendarView extends FrameLayout implements StickyListHeaders
 
     // region Public methods
 
-    public void init(List<CalendarEvent> eventList, Calendar minDate, Calendar maxDate, Locale locale, CalendarPickerController calendarPickerController) {
+    public void init(List<CalendarEvent> eventList, Calendar minDate, Calendar maxDate, Locale locale, CalendarPickerController calendarPickerController, EventRenderer<?> ... renderers) {
         mCalendarPickerController = calendarPickerController;
 
         CalendarManager.getInstance(getContext()).buildCal(minDate, maxDate, locale, new DayItem(), new WeekItem());
@@ -218,6 +218,9 @@ public class AgendaCalendarView extends FrameLayout implements StickyListHeaders
 
         // add default event renderer
         addEventRenderer(new DefaultEventRenderer());
+        for (EventRenderer<?> renderer: renderers) {
+            addEventRenderer(renderer);
+        }
     }
 
     public void init(Locale locale, List<IWeekItem> lWeeks, List<IDayItem> lDays, List<CalendarEvent> lEvents, CalendarPickerController calendarPickerController) {
