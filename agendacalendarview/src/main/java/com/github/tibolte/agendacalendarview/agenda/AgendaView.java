@@ -119,7 +119,7 @@ public class AgendaView extends FrameLayout {
             mover.addListener(new Animator.AnimatorListener() {
                 @Override
                 public void onAnimationStart(Animator animation) {
-                    mShadowView.setVisibility(GONE);
+                    //mShadowView.setVisibility(GONE);
                 }
 
                 @Override
@@ -127,7 +127,7 @@ public class AgendaView extends FrameLayout {
                     if (targetY == 0) {
                         BusProvider.getInstance().send(new Events.AgendaListViewTouchedEvent());
                     }
-                    mShadowView.setVisibility(VISIBLE);
+                    //mShadowView.setVisibility(VISIBLE);
                 }
 
                 @Override

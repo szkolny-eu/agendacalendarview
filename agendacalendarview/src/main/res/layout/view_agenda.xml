@@ -6,8 +6,8 @@
         android:id="@+id/view_shadow"
         android:layout_width="match_parent"
         android:layout_height="5dp"
-        android:background="@drawable/shadow">
-    </View>
+        android:background="@drawable/shadow"
+        android:visibility="visible"/>
 
     <com.github.tibolte.agendacalendarview.agenda.AgendaListView
         android:id="@+id/agenda_listview"
