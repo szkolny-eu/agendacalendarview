@@ -155,6 +155,7 @@ public class AgendaCalendarView extends FrameLayout implements StickyListHeaders
                                     mAgendaView.getAgendaListView().setOnScrollListener(mAgendaScrollListener);
                                     mFloatingActionButton.setOnClickListener((v) -> {
                                         mAgendaView.translateList(0);
+                                        mAgendaView.getAgendaListView().smoothScrollBy(0, 0);
                                         mAgendaView.getAgendaListView().scrollToCurrentDate(CalendarManager.getInstance().getToday());
                                         new Handler().postDelayed(() -> mFloatingActionButton.hide(), fabAnimationDelay);
                                     });
