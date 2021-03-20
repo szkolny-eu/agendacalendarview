@@ -3,12 +3,10 @@
     <!-- Calendar values -->
     <dimen name="calendar_header_height">20dp</dimen>
     <dimen name="day_cell_height">52dp</dimen>
-    <dimen name="text_month_size">18dp</dimen>
     <dimen name="text_day_size">14dp</dimen>
     <dimen name="circle_selected_size">32dp</dimen>
 
     <!-- Agenda values -->
-    <dimen name="circle_event_color_size">14dp</dimen>
     <dimen name="circle_day_size">60dp</dimen>
 
     <!-- Floating action button values -->
