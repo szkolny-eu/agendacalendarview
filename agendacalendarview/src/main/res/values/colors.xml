@@ -11,7 +11,8 @@
     <color name="calendar_divider_color">#F3F3F3</color>
 
     <!-- Colors for Agenda view -->
-    <color name="agenda_list_header_divider">#E4E4E4</color>
+    <!--<color name="agenda_list_header_divider">#666666</color>-->
+    <color name="agenda_list_header_divider">#00000000</color>
 
     <!-- General -->
     <color name="blue_selected">#1D87E7</color>
