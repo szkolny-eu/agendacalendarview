@@ -25,6 +25,14 @@ public interface CalendarEvent {
 
     void setTextColor(int mTextColor);
 
+    String getDescription();
+
+    void setDescription(String mDescription);
+
+    boolean isAllDay();
+
+    void setAllDay(boolean allDay);
+
     Calendar getStartTime();
 
     void setStartTime(Calendar mStartTime);
@@ -50,4 +58,6 @@ public interface CalendarEvent {
     void setWeekReference(IWeekItem mWeekReference);
 
     CalendarEvent copy();
+
+    int getColor();
 }
