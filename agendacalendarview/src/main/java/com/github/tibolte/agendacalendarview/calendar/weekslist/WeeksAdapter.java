@@ -2,6 +2,7 @@ package com.github.tibolte.agendacalendarview.calendar.weekslist;
 
 import com.github.tibolte.agendacalendarview.CalendarManager;
 import com.github.tibolte.agendacalendarview.R;
+import com.github.tibolte.agendacalendarview.models.CalendarEvent;
 import com.github.tibolte.agendacalendarview.models.IDayItem;
 import com.github.tibolte.agendacalendarview.models.IWeekItem;
 import com.github.tibolte.agendacalendarview.utils.BusProvider;
@@ -13,6 +14,8 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 
@@ -37,18 +40,20 @@ public class WeeksAdapter extends RecyclerView.Adapter<WeeksAdapter.WeekViewHold
     private Context mContext;
     private Calendar mToday;
     private List<IWeekItem> mWeeksList = new ArrayList<>();
+    private List<CalendarEvent> mEventList = new ArrayList<>();
     private boolean mDragging;
     private boolean mAlphaSet;
     private int mDayTextColor, mPastDayTextColor, mCurrentDayColor;
 
     // region Constructor
 
-    public WeeksAdapter(Context context, Calendar today, int dayTextColor, int currentDayTextColor, int pastDayTextColor) {
+    public WeeksAdapter(Context context, Calendar today, int dayTextColor, int currentDayTextColor, int pastDayTextColor, List<CalendarEvent> events) {
         this.mToday = today;
         this.mContext = context;
         this.mDayTextColor = dayTextColor;
         this.mCurrentDayColor = currentDayTextColor;
         this.mPastDayTextColor = pastDayTextColor;
+        this.mEventList = events;
     }
 
     // endregion
@@ -137,7 +142,41 @@ public class WeeksAdapter extends RecyclerView.Adapter<WeeksAdapter.WeekViewHold
                 TextView txtDay = (TextView) cellItem.findViewById(R.id.view_day_day_label);
                 TextView txtMonth = (TextView) cellItem.findViewById(R.id.view_day_month_label);
                 View circleView = cellItem.findViewById(R.id.view_day_circle_selected);
+                View eventIndicator1 = cellItem.findViewById(R.id.view_day_event_indicator1);
+                View eventIndicator2 = cellItem.findViewById(R.id.view_day_event_indicator2);
+                View eventIndicator3 = cellItem.findViewById(R.id.view_day_event_indicator3);
                 cellItem.setOnClickListener(v->BusProvider.getInstance().send(new Events.DayClickedEvent(dayItem)));
+
+                eventIndicator1.setVisibility(View.INVISIBLE);
+                eventIndicator2.setVisibility(View.INVISIBLE);
+                eventIndicator3.setVisibility(View.INVISIBLE);
+
+                Calendar dayItemCalendar = Calendar.getInstance();
+                dayItemCalendar.setTime(dayItem.getDate());
+                int eventCount = 0;
+                for (CalendarEvent event: mEventList) {
+                    if (event.isPlaceholder())
+                        continue;
+                    if (event.getStartTime().get(Calendar.YEAR) == dayItemCalendar.get(Calendar.YEAR)
+                            && event.getStartTime().get(Calendar.MONTH) == dayItemCalendar.get(Calendar.MONTH)
+                            && event.getStartTime().get(Calendar.DAY_OF_MONTH) == dayItemCalendar.get(Calendar.DAY_OF_MONTH)) {
+                        eventCount++;
+                        if (eventCount == 1) {
+                            eventIndicator1.setVisibility(View.VISIBLE);
+                            eventIndicator1.getBackground().setColorFilter(new PorterDuffColorFilter(event.getColor(),PorterDuff.Mode.MULTIPLY));
+                        }
+                        if (eventCount == 2) {
+                            eventIndicator2.setVisibility(View.VISIBLE);
+                            eventIndicator2.getBackground().setColorFilter(new PorterDuffColorFilter(event.getColor(),PorterDuff.Mode.MULTIPLY));
+                        }
+                        if (eventCount == 3) {
+                            eventIndicator3.setVisibility(View.VISIBLE);
+                            eventIndicator3.getBackground().setColorFilter(new PorterDuffColorFilter(event.getColor(),PorterDuff.Mode.MULTIPLY));
+                        }
+                    }
+                }
+
+                //Log.d("CalendarView", "Event count for day "+dayItem.getValue()+" is "+eventCount);
 
                 txtMonth.setVisibility(View.GONE);
                 txtDay.setTextColor(mDayTextColor);

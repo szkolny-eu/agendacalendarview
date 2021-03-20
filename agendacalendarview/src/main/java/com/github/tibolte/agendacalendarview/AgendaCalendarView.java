@@ -14,6 +14,8 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.github.tibolte.agendacalendarview.agenda.AgendaAdapter;
 import com.github.tibolte.agendacalendarview.agenda.AgendaView;
@@ -50,6 +52,10 @@ public class AgendaCalendarView extends FrameLayout implements StickyListHeaders
 
     private int mAgendaCurrentDayTextColor, mCalendarHeaderColor, mCalendarHeaderTextColor, mCalendarBackgroundColor, mCalendarDayTextColor, mCalendarPastDayTextColor, mCalendarCurrentDayColor, mFabColor;
     private CalendarPickerController mCalendarPickerController;
+
+    public AgendaView getAgendaView() {
+        return mAgendaView;
+    }
 
     private ListViewScrollTracker mAgendaListViewScrollTracker;
     private AbsListView.OnScrollListener mAgendaScrollListener = new AbsListView.OnScrollListener() {
@@ -205,7 +211,7 @@ public class AgendaCalendarView extends FrameLayout implements StickyListHeaders
         CalendarManager.getInstance(getContext()).buildCal(minDate, maxDate, locale, new DayItem(), new WeekItem());
 
         // Feed our views with weeks list and events
-        mCalendarView.init(CalendarManager.getInstance(getContext()), mCalendarDayTextColor, mCalendarCurrentDayColor, mCalendarPastDayTextColor);
+        mCalendarView.init(CalendarManager.getInstance(getContext()), mCalendarDayTextColor, mCalendarCurrentDayColor, mCalendarPastDayTextColor, eventList);
 
         // Load agenda events and scroll to current day
         AgendaAdapter agendaAdapter = new AgendaAdapter(mAgendaCurrentDayTextColor);
@@ -229,7 +235,7 @@ public class AgendaCalendarView extends FrameLayout implements StickyListHeaders
         CalendarManager.getInstance(getContext()).loadCal(locale, lWeeks, lDays, lEvents);
 
         // Feed our views with weeks list and events
-        mCalendarView.init(CalendarManager.getInstance(getContext()), mCalendarDayTextColor, mCalendarCurrentDayColor, mCalendarPastDayTextColor);
+        mCalendarView.init(CalendarManager.getInstance(getContext()), mCalendarDayTextColor, mCalendarCurrentDayColor, mCalendarPastDayTextColor, lEvents);
 
         // Load agenda events and scroll to current day
         AgendaAdapter agendaAdapter = new AgendaAdapter(mAgendaCurrentDayTextColor);

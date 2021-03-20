@@ -14,7 +14,6 @@ import com.github.tibolte.agendacalendarview.utils.Events;
 import android.content.Context;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -133,14 +132,14 @@ public class CalendarView extends LinearLayout {
 
     // region Public methods
 
-    public void init(CalendarManager calendarManager, int dayTextColor, int currentDayTextColor, int pastDayTextColor) {
+    public void init(CalendarManager calendarManager, int dayTextColor, int currentDayTextColor, int pastDayTextColor, List<CalendarEvent> eventList) {
         Calendar today = calendarManager.getToday();
         Locale locale = calendarManager.getLocale();
         SimpleDateFormat weekDayFormatter = calendarManager.getWeekdayFormatter();
         List<IWeekItem> weeks = calendarManager.getWeeks();
 
         setUpHeader(today, weekDayFormatter, locale);
-        setUpAdapter(today, weeks, dayTextColor, currentDayTextColor, pastDayTextColor);
+        setUpAdapter(today, weeks, dayTextColor, currentDayTextColor, pastDayTextColor, eventList);
         scrollToDate(today, weeks);
     }
 
@@ -190,13 +189,19 @@ public class CalendarView extends LinearLayout {
     /**
      * Creates a new adapter if necessary and sets up its parameters.
      */
-    private void setUpAdapter(Calendar today, List<IWeekItem> weeks, int dayTextColor, int currentDayTextColor, int pastDayTextColor) {
-        if (mWeeksAdapter == null) {
-            Log.d(LOG_TAG, "Setting adapter with today's calendar: " + today.toString());
-            mWeeksAdapter = new WeeksAdapter(getContext(), today, dayTextColor, currentDayTextColor, pastDayTextColor);
-            mListViewWeeks.setAdapter(mWeeksAdapter);
-        }
-        mWeeksAdapter.updateWeeksItems(weeks);
+    private void setUpAdapter(Calendar today, List<IWeekItem> weeks, int dayTextColor, int currentDayTextColor, int pastDayTextColor, List<CalendarEvent> events) {
+        BusProvider.getInstance().toObserverable()
+                .subscribe(event -> {
+                    if (event instanceof Events.EventsFetched) {
+                        //Log.d("CalendarView", "events size "+events.size());
+                        if (mWeeksAdapter == null) {
+                            //Log.d(LOG_TAG, "Setting adapter with today's calendar: " + today.toString());
+                            mWeeksAdapter = new WeeksAdapter(getContext(), today, dayTextColor, currentDayTextColor, pastDayTextColor, events);
+                            mListViewWeeks.setAdapter(mWeeksAdapter);
+                        }
+                        mWeeksAdapter.updateWeeksItems(weeks);
+                    }});
+
     }
 
     private void setUpHeader(Calendar today, SimpleDateFormat weekDayFormatter, Locale locale) {
