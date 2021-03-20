@@ -56,7 +56,8 @@ public class AgendaView extends FrameLayout {
                         int offset = (int) (3 * getResources().getDimension(R.dimen.day_cell_height));
                         translateList(offset);
                     } else if (event instanceof Events.EventsFetched) {
-                        ((AgendaAdapter) getAgendaListView().getAdapter()).updateEvents(CalendarManager.getInstance().getEvents());
+                        if (getAgendaListView().getAdapter() != null)
+                            ((AgendaAdapter) getAgendaListView().getAdapter()).updateEvents(CalendarManager.getInstance().getEvents());
 
                         getViewTreeObserver().addOnGlobalLayoutListener(
                                 new ViewTreeObserver.OnGlobalLayoutListener() {
