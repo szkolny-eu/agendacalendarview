@@ -21,6 +21,10 @@ public interface CalendarEvent {
 
     void setShowBadge(boolean mShowBadge);
 
+    int getTextColor();
+
+    void setTextColor(int mTextColor);
+
     Calendar getStartTime();
 
     void setStartTime(Calendar mStartTime);

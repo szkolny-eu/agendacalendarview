@@ -107,16 +107,32 @@ public class MainActivity extends AppCompatActivity implements CalendarPickerCon
         Calendar startTime1 = Calendar.getInstance();
         Calendar endTime1 = Calendar.getInstance();
         endTime1.add(Calendar.MONTH, 1);
-        BaseCalendarEvent event1 = new BaseCalendarEvent("Thibault travels in Iceland", "A wonderful journey!", "Iceland",
-                ContextCompat.getColor(this, R.color.orange_dark), startTime1, endTime1, true);
+        BaseCalendarEvent event1 = new BaseCalendarEvent(
+                "Thibault travels in Iceland",
+                "A wonderful journey!",
+                "Iceland",
+                ContextCompat.getColor(this, R.color.orange_dark),
+                Color.WHITE,
+                startTime1,
+                endTime1,
+                true
+        );
         eventList.add(event1);
 
         Calendar startTime2 = Calendar.getInstance();
         startTime2.add(Calendar.DAY_OF_YEAR, 1);
         Calendar endTime2 = Calendar.getInstance();
         endTime2.add(Calendar.DAY_OF_YEAR, 3);
-        BaseCalendarEvent event2 = new BaseCalendarEvent("Visit to Dalvík", "A beautiful small town", "Dalvík",
-                ContextCompat.getColor(this, R.color.yellow), startTime2, endTime2, true);
+        BaseCalendarEvent event2 = new BaseCalendarEvent(
+                "Visit to Dalvík",
+                "A beautiful small town",
+                "Dalvík",
+                ContextCompat.getColor(this, R.color.yellow),
+                Color.WHITE,
+                startTime2,
+                endTime2,
+                true
+        );
         eventList.add(event2);
 
         Calendar startTime3 = Calendar.getInstance();
@@ -125,8 +141,15 @@ public class MainActivity extends AppCompatActivity implements CalendarPickerCon
         startTime3.set(Calendar.MINUTE, 0);
         endTime3.set(Calendar.HOUR_OF_DAY, 15);
         endTime3.set(Calendar.MINUTE, 0);
-        DrawableCalendarEvent event3 = new DrawableCalendarEvent("Visit of Harpa", "", "Dalvík",
-                ContextCompat.getColor(this, R.color.blue_dark), startTime3, endTime3, false, android.R.drawable.ic_dialog_info);
+        DrawableCalendarEvent event3 = new DrawableCalendarEvent(
+                "Visit of Harpa",
+                "",
+                "Dalvík",
+                ContextCompat.getColor(this, R.color.blue_dark),
+                startTime3,
+                endTime3,
+                false,
+                android.R.drawable.ic_dialog_info);
         eventList.add(event3);
     }
 

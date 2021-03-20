@@ -16,6 +16,10 @@ public class BaseCalendarEvent implements CalendarEvent {
      */
     private int mColor;
     /**
+     * Text color displayed on the background color
+     */
+    private int mTextColor;
+    /**
      * Title of the event.
      */
     private String mTitle;
@@ -85,6 +89,7 @@ public class BaseCalendarEvent implements CalendarEvent {
      *
      * @param id          The id of the event.
      * @param color       The color of the event.
+     * @param textColor   The color of the event description text.
      * @param title       The title of the event.
      * @param description The description of the event.
      * @param location    The location of the event.
@@ -96,6 +101,7 @@ public class BaseCalendarEvent implements CalendarEvent {
     public BaseCalendarEvent(
             long id,
             int color,
+            int textColor,
             String title,
             String description,
             String location,
@@ -106,6 +112,7 @@ public class BaseCalendarEvent implements CalendarEvent {
     ) {
         this.mId = id;
         this.mColor = color;
+        this.mTextColor = textColor;
         this.mAllDay = (allDay == 1);
         this.mDuration = duration;
         this.mTitle = title;
@@ -128,6 +135,7 @@ public class BaseCalendarEvent implements CalendarEvent {
      * @param description The description of the event.
      * @param location The location of the event.
      * @param color The color of the event (for display in the app).
+     * @param textColor The color of the event description text.
      * @param startTime The start time of the event.
      * @param endTime The end time of the event.
      * @param allDay Indicates if the event lasts the whole day.
@@ -137,6 +145,7 @@ public class BaseCalendarEvent implements CalendarEvent {
             String description,
             String location,
             int color,
+            int textColor,
             Calendar startTime,
             Calendar endTime,
             boolean allDay
@@ -145,6 +154,7 @@ public class BaseCalendarEvent implements CalendarEvent {
         this.mDescription = description;
         this.mLocation = location;
         this.mColor = color;
+        this.mTextColor = textColor;
         this.mStartTime = startTime;
         this.mEndTime = endTime;
         this.mAllDay = allDay;
@@ -155,6 +165,7 @@ public class BaseCalendarEvent implements CalendarEvent {
             String description,
             String location,
             int color,
+            int textColor,
             Calendar startTime,
             Calendar endTime,
             boolean allDay,
@@ -165,6 +176,7 @@ public class BaseCalendarEvent implements CalendarEvent {
         this.mDescription = description;
         this.mLocation = location;
         this.mColor = color;
+        this.mTextColor = textColor;
         this.mStartTime = startTime;
         this.mEndTime = endTime;
         this.mAllDay = allDay;
@@ -175,6 +187,7 @@ public class BaseCalendarEvent implements CalendarEvent {
     public BaseCalendarEvent(BaseCalendarEvent calendarEvent) {
         this.mId = calendarEvent.getId();
         this.mColor = calendarEvent.getColor();
+        this.mTextColor = calendarEvent.getTextColor();
         this.mAllDay = calendarEvent.isAllDay();
         this.mDuration = calendarEvent.getDuration();
         this.mTitle = calendarEvent.getTitle();
@@ -195,6 +208,14 @@ public class BaseCalendarEvent implements CalendarEvent {
 
     public void setColor(int mColor) {
         this.mColor = mColor;
+    }
+
+    public int getTextColor() {
+        return mTextColor;
+    }
+
+    public void setTextColor(int mTextColor) {
+        this.mTextColor = mTextColor;
     }
 
     public String getDescription() {
