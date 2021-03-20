@@ -20,7 +20,7 @@ public class AgendaView extends FrameLayout {
 
     private AgendaListView mAgendaListView;
     private View mShadowView;
-    private boolean enablePlaceholder;
+    private boolean enablePlaceholder = true;
 
     // region Constructors
 
