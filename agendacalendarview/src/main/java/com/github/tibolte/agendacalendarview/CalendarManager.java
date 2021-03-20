@@ -170,7 +170,7 @@ public class CalendarManager {
             weekItem.setDayItems(dayItems);
             mWeeks.add(weekItem);
 
-            Log.d(LOG_TAG, String.format("Adding week: %s", weekItem));
+            //Log.d(LOG_TAG, String.format("Adding week: %s", weekItem));
 
             mWeekCounter.add(Calendar.WEEK_OF_YEAR, 1);
 
@@ -244,7 +244,7 @@ public class CalendarManager {
         }
         cal.add(Calendar.DATE, offset);
 
-        Log.d(LOG_TAG, String.format("Buiding row week starting at %s", cal.getTime()));
+        //Log.d(LOG_TAG, String.format("Buiding row week starting at %s", cal.getTime()));
         for (int c = 0; c < 7; c++) {
             IDayItem dayItem = mCleanDay.copy();
             dayItem.buildDayItemFromCal(cal);

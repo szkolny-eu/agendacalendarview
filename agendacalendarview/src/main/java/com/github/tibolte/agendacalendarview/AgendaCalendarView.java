@@ -68,7 +68,7 @@ public class AgendaCalendarView extends FrameLayout implements StickyListHeaders
             if (scrollY != 0) {
                 mFloatingActionButton.show();
             }
-            Log.d(LOG_TAG, String.format("Agenda listView scrollY: %d", scrollY));
+            //Log.d(LOG_TAG, String.format("Agenda listView scrollY: %d", scrollY));
             int toAngle = scrollY / 100;
             if (toAngle > mMaxAngle) {
                 toAngle = mMaxAngle;
@@ -177,7 +177,7 @@ public class AgendaCalendarView extends FrameLayout implements StickyListHeaders
 
     @Override
     public void onStickyHeaderChanged(StickyListHeadersListView stickyListHeadersListView, View header, int position, long headerId) {
-        Log.d(LOG_TAG, String.format("onStickyHeaderChanged, position = %d, headerId = %d", position, headerId));
+        //Log.d(LOG_TAG, String.format("onStickyHeaderChanged, position = %d, headerId = %d", position, headerId));
 
         if (CalendarManager.getInstance().getEvents().size() > 0) {
             CalendarEvent event = CalendarManager.getInstance().getEvents().get(position);
@@ -207,7 +207,7 @@ public class AgendaCalendarView extends FrameLayout implements StickyListHeaders
 
         CalendarManager.getInstance().loadEvents(eventList, new BaseCalendarEvent());
         BusProvider.getInstance().send(new Events.EventsFetched());
-        Log.d(LOG_TAG, "CalendarEventTask finished");
+        Log.d(LOG_TAG, "CalendarEventTask finished, event count "+eventList.size());
 
         // add default event renderer
         addEventRenderer(new DefaultEventRenderer());
