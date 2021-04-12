@@ -58,32 +58,19 @@ public class AgendaCalendarView extends FrameLayout implements StickyListHeaders
     }
 
     private ListViewScrollTracker mAgendaListViewScrollTracker;
-    private AbsListView.OnScrollListener mAgendaScrollListener = new AbsListView.OnScrollListener() {
-        int mCurrentAngle;
-        int mMaxAngle = 85;
-
+    public final AbsListView.OnScrollListener agendaScrollListener = new AbsListView.OnScrollListener() {
         @Override
         public void onScrollStateChanged(AbsListView view, int scrollState) {
-
         }
 
         @Override
         public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+            if (mAgendaListViewScrollTracker == null)
+                return;
             int scrollY = mAgendaListViewScrollTracker.calculateScrollY(firstVisibleItem, visibleItemCount);
             if (scrollY != 0) {
                 mFloatingActionButton.show();
             }
-            //Log.d(LOG_TAG, String.format("Agenda listView scrollY: %d", scrollY));
-            /*int toAngle = scrollY / 100;
-            if (toAngle > mMaxAngle) {
-                toAngle = mMaxAngle;
-            } else if (toAngle < -mMaxAngle) {
-                toAngle = -mMaxAngle;
-            }
-            RotateAnimation rotate = new RotateAnimation(mCurrentAngle, toAngle, mFloatingActionButton.getWidth() / 2, mFloatingActionButton.getHeight() / 2);
-            rotate.setFillAfter(true);
-            mCurrentAngle = toAngle;
-            mFloatingActionButton.startAnimation(rotate);*/
         }
     };
 
@@ -159,7 +146,6 @@ public class AgendaCalendarView extends FrameLayout implements StickyListHeaders
                                 new Handler().postDelayed(() -> {
                                     mFloatingActionButton.hide();
                                     mAgendaListViewScrollTracker = new ListViewScrollTracker(mAgendaView.getAgendaListView());
-                                    mAgendaView.getAgendaListView().setOnScrollListener(mAgendaScrollListener);
                                     mFloatingActionButton.setOnClickListener((v) -> {
                                         mAgendaView.translateList(0);
                                         mAgendaView.getAgendaListView().smoothScrollBy(0, 0);
