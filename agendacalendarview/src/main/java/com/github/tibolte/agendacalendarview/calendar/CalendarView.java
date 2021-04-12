@@ -11,6 +11,7 @@ import com.github.tibolte.agendacalendarview.utils.BusProvider;
 import com.github.tibolte.agendacalendarview.utils.DateHelper;
 import com.github.tibolte.agendacalendarview.utils.Events;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import android.util.AttributeSet;
@@ -226,15 +227,27 @@ public class CalendarView extends LinearLayout {
     }
 
     private void expandCalendarView() {
-        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) getLayoutParams();
-        layoutParams.height = (int) (getResources().getDimension(R.dimen.calendar_header_height) + 5 * getResources().getDimension(R.dimen.day_cell_height));
-        setLayoutParams(layoutParams);
+        ValueAnimator anim = ValueAnimator.ofInt(getMeasuredHeight(), (int) (getResources().getDimension(R.dimen.calendar_header_height) + 5 * getResources().getDimension(R.dimen.day_cell_height)));
+        anim.addUpdateListener(valueAnimator -> {
+            int height = (Integer) valueAnimator.getAnimatedValue();
+            ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) getLayoutParams();
+            layoutParams.height = height;
+            setLayoutParams(layoutParams);
+        });
+        anim.setDuration(150);
+        anim.start();
     }
 
     private void collapseCalendarView() {
-        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) getLayoutParams();
-        layoutParams.height = (int) (getResources().getDimension(R.dimen.calendar_header_height) + 2 * getResources().getDimension(R.dimen.day_cell_height));
-        setLayoutParams(layoutParams);
+        ValueAnimator anim = ValueAnimator.ofInt(getMeasuredHeight(), (int) (getResources().getDimension(R.dimen.calendar_header_height) + 2 * getResources().getDimension(R.dimen.day_cell_height)));
+        anim.addUpdateListener(valueAnimator -> {
+            int height = (Integer) valueAnimator.getAnimatedValue();
+            ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) getLayoutParams();
+            layoutParams.height = height;
+            setLayoutParams(layoutParams);
+        });
+        anim.setDuration(150);
+        anim.start();
     }
 
     /**

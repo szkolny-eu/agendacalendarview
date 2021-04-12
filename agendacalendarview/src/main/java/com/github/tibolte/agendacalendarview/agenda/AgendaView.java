@@ -96,6 +96,7 @@ public class AgendaView extends FrameLayout {
             case MotionEvent.ACTION_DOWN:
                 // if the user touches the listView, we put it back to the top
                 translateList(0);
+                BusProvider.getInstance().send(new Events.AgendaListViewTouchedEvent());
                 break;
             default:
                 break;
@@ -116,30 +117,6 @@ public class AgendaView extends FrameLayout {
         if (targetY != getTranslationY()) {
             ObjectAnimator mover = ObjectAnimator.ofFloat(this, "translationY", targetY);
             mover.setDuration(150);
-            mover.addListener(new Animator.AnimatorListener() {
-                @Override
-                public void onAnimationStart(Animator animation) {
-                    //mShadowView.setVisibility(GONE);
-                }
-
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    if (targetY == 0) {
-                        BusProvider.getInstance().send(new Events.AgendaListViewTouchedEvent());
-                    }
-                    //mShadowView.setVisibility(VISIBLE);
-                }
-
-                @Override
-                public void onAnimationCancel(Animator animation) {
-
-                }
-
-                @Override
-                public void onAnimationRepeat(Animator animation) {
-
-                }
-            });
             mover.start();
         }
     }
