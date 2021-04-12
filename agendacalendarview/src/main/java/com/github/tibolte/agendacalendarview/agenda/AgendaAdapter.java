@@ -79,10 +79,8 @@ public class AgendaAdapter extends BaseAdapter implements StickyListHeadersAdapt
         return position;
     }
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    private EventRenderer getEventRenderer(CalendarEvent event) {
         EventRenderer eventRenderer = new DefaultEventRenderer();
-        final CalendarEvent event = getItem(position);
 
         // Search for the correct event renderer
         for (EventRenderer renderer : mRenderers) {
@@ -91,8 +89,30 @@ public class AgendaAdapter extends BaseAdapter implements StickyListHeadersAdapt
                 break;
             }
         }
-        convertView = LayoutInflater.from(parent.getContext())
-                .inflate(eventRenderer.getEventLayout(), parent, false);
+        return eventRenderer;
+    }
+
+    @Override
+    public int getViewTypeCount() {
+        return mRenderers.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        final CalendarEvent event = getItem(position);
+        return mRenderers.indexOf(getEventRenderer(event));
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        final CalendarEvent event = getItem(position);
+        EventRenderer eventRenderer = getEventRenderer(event);
+
+        if (convertView == null || ((int)convertView.getTag()) == eventRenderer.getEventLayout()) {
+            convertView = LayoutInflater.from(parent.getContext())
+                    .inflate(eventRenderer.getEventLayout(), parent, false);
+            convertView.setTag(eventRenderer.getEventLayout());
+        }
         eventRenderer.render(convertView, event);
         return convertView;
     }

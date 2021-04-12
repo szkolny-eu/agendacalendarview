@@ -73,8 +73,7 @@ public class MainActivity extends AppCompatActivity implements CalendarPickerCon
         List<CalendarEvent> readyEvents = calendarManager.getEvents();
         List<IDayItem> readyDays = calendarManager.getDays();
         List<IWeekItem> readyWeeks = calendarManager.getWeeks();
-        mAgendaCalendarView.init(Locale.getDefault(), readyWeeks,readyDays,readyEvents,this);
-        mAgendaCalendarView.addEventRenderer(new DrawableEventRenderer());
+        mAgendaCalendarView.init(Locale.getDefault(), readyWeeks,readyDays,readyEvents,this, new DrawableEventRenderer());
         mAgendaCalendarView.getAgendaView().getAgendaListView().setOnScrollListener(mAgendaCalendarView.agendaScrollListener);
     }
 

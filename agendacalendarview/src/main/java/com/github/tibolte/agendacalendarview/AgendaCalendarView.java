@@ -201,21 +201,21 @@ public class AgendaCalendarView extends FrameLayout implements StickyListHeaders
 
         // Load agenda events and scroll to current day
         AgendaAdapter agendaAdapter = new AgendaAdapter(mAgendaCurrentDayTextColor);
+        // add default event renderer
+        addEventRenderer(agendaAdapter, new DefaultEventRenderer());
+        for (EventRenderer<?> renderer: renderers) {
+            addEventRenderer(agendaAdapter, renderer);
+        }
+
         mAgendaView.getAgendaListView().setAdapter(agendaAdapter);
         mAgendaView.getAgendaListView().setOnStickyHeaderChangedListener(this);
 
         CalendarManager.getInstance().loadEvents(eventList, new BaseCalendarEvent());
         BusProvider.getInstance().send(new Events.EventsFetched());
         Log.d(LOG_TAG, "CalendarEventTask finished, event count "+eventList.size());
-
-        // add default event renderer
-        addEventRenderer(new DefaultEventRenderer());
-        for (EventRenderer<?> renderer: renderers) {
-            addEventRenderer(renderer);
-        }
     }
 
-    public void init(Locale locale, List<IWeekItem> lWeeks, List<IDayItem> lDays, List<CalendarEvent> lEvents, CalendarPickerController calendarPickerController) {
+    public void init(Locale locale, List<IWeekItem> lWeeks, List<IDayItem> lDays, List<CalendarEvent> lEvents, CalendarPickerController calendarPickerController, EventRenderer<?> ... renderers) {
         mCalendarPickerController = calendarPickerController;
 
         CalendarManager.getInstance(getContext()).loadCal(locale, lWeeks, lDays, lEvents);
@@ -225,20 +225,22 @@ public class AgendaCalendarView extends FrameLayout implements StickyListHeaders
 
         // Load agenda events and scroll to current day
         AgendaAdapter agendaAdapter = new AgendaAdapter(mAgendaCurrentDayTextColor);
+        // add default event renderer
+        addEventRenderer(agendaAdapter, new DefaultEventRenderer());
+        for (EventRenderer<?> renderer: renderers) {
+            addEventRenderer(agendaAdapter, renderer);
+        }
+
         mAgendaView.getAgendaListView().setAdapter(agendaAdapter);
         mAgendaView.getAgendaListView().setOnStickyHeaderChangedListener(this);
 
         // notify that actually everything is loaded
         BusProvider.getInstance().send(new Events.EventsFetched());
         Log.d(LOG_TAG, "CalendarEventTask finished");
-
-        // add default event renderer
-        addEventRenderer(new DefaultEventRenderer());
     }
 
-    public void addEventRenderer(@NonNull final EventRenderer<?> renderer) {
-        AgendaAdapter adapter = (AgendaAdapter) mAgendaView.getAgendaListView().getAdapter();
-        adapter.addEventRenderer(renderer);
+    private void addEventRenderer(AgendaAdapter agendaAdapter, @NonNull final EventRenderer<?> renderer) {
+        agendaAdapter.addEventRenderer(renderer);
     }
 
     public void enableCalenderView(boolean enable) {
