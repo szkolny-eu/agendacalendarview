@@ -33,10 +33,12 @@ import com.github.tibolte.agendacalendarview.utils.Events;
 import com.github.tibolte.agendacalendarview.utils.ListViewScrollTracker;
 import com.github.tibolte.agendacalendarview.widgets.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import rx.Subscription;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 /**
@@ -56,6 +58,8 @@ public class AgendaCalendarView extends FrameLayout implements StickyListHeaders
     public AgendaView getAgendaView() {
         return mAgendaView;
     }
+
+    private final List<Subscription> subscriptions = new ArrayList<>();
 
     private ListViewScrollTracker mAgendaListViewScrollTracker;
     public final AbsListView.OnScrollListener agendaScrollListener = new AbsListView.OnScrollListener() {
@@ -105,6 +109,15 @@ public class AgendaCalendarView extends FrameLayout implements StickyListHeaders
     // region Class - View
 
     @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+
+        for (Subscription sub: subscriptions) {
+            sub.unsubscribe();
+        }
+    }
+
+    @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
         mCalendarView = (CalendarView) findViewById(R.id.calendar_view);
@@ -125,7 +138,7 @@ public class AgendaCalendarView extends FrameLayout implements StickyListHeaders
             mCalendarPickerController.onEventSelected(CalendarManager.getInstance().getEvents().get(position));
         });
 
-        BusProvider.getInstance().toObserverable()
+        Subscription sub = BusProvider.getInstance().toObserverable()
                 .subscribe(event -> {
                     if (event instanceof Events.DayClickedEvent) {
                         if (mCalendarPickerController != null)
@@ -168,6 +181,7 @@ public class AgendaCalendarView extends FrameLayout implements StickyListHeaders
                         alphaAnimation.start();
                     }
                 });
+        subscriptions.add(sub);
     }
 
     // endregion

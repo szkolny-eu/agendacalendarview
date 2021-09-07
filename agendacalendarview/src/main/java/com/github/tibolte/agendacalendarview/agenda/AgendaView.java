@@ -16,11 +16,17 @@ import com.github.tibolte.agendacalendarview.R;
 import com.github.tibolte.agendacalendarview.utils.BusProvider;
 import com.github.tibolte.agendacalendarview.utils.Events;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import rx.Subscription;
+
 public class AgendaView extends FrameLayout {
 
     private AgendaListView mAgendaListView;
     private View mShadowView;
     private boolean enablePlaceholder = true;
+    private final List<Subscription> subscriptions = new ArrayList<>();
 
     // region Constructors
 
@@ -41,13 +47,22 @@ public class AgendaView extends FrameLayout {
     // region Class - View
 
     @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+
+        for (Subscription sub: subscriptions) {
+            sub.unsubscribe();
+        }
+    }
+
+    @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
 
         mAgendaListView = (AgendaListView) findViewById(R.id.agenda_listview);
         mShadowView = findViewById(R.id.view_shadow);
 
-        BusProvider.getInstance().toObserverable()
+        Subscription sub = BusProvider.getInstance().toObserverable()
                 .subscribe(event -> {
                     if (event instanceof Events.DayClickedEvent) {
                         Events.DayClickedEvent clickedEvent = (Events.DayClickedEvent) event;
@@ -86,6 +101,7 @@ public class AgendaView extends FrameLayout {
                         ((AgendaAdapter) getAgendaListView().getAdapter()).updateEvents(CalendarManager.getInstance().getEvents());
                     }
                 });
+        subscriptions.add(sub);
     }
 
     @Override

@@ -22,9 +22,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+
+import rx.Subscription;
 
 /**
  * The calendar view is a freely scrolling view that allows the user to browse between days of the
@@ -54,6 +57,8 @@ public class CalendarView extends LinearLayout {
      * The current row displayed at top of the list
      */
     private int mCurrentListPosition;
+
+    private final List<Subscription> subscriptions = new ArrayList<>();
 
     // region Constructors
 
@@ -116,7 +121,7 @@ public class CalendarView extends LinearLayout {
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
 
-        BusProvider.getInstance().toObserverable()
+        Subscription sub = BusProvider.getInstance().toObserverable()
                 .subscribe(event -> {
                     if (event instanceof Events.CalendarScrolledEvent) {
                         expandCalendarView();
@@ -127,6 +132,16 @@ public class CalendarView extends LinearLayout {
                         updateSelectedDay(clickedEvent.getCalendar(), clickedEvent.getDay());
                     }
                 });
+        subscriptions.add(sub);
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+
+        for (Subscription sub: subscriptions) {
+            sub.unsubscribe();
+        }
     }
 
     // endregion
@@ -191,7 +206,7 @@ public class CalendarView extends LinearLayout {
      * Creates a new adapter if necessary and sets up its parameters.
      */
     private void setUpAdapter(Calendar today, List<IWeekItem> weeks, int dayTextColor, int currentDayTextColor, int pastDayTextColor, List<CalendarEvent> events) {
-        BusProvider.getInstance().toObserverable()
+        Subscription sub = BusProvider.getInstance().toObserverable()
                 .subscribe(event -> {
                     if (event instanceof Events.EventsFetched) {
                         //Log.d("CalendarView", "events size "+events.size());
@@ -202,7 +217,7 @@ public class CalendarView extends LinearLayout {
                         }
                         mWeeksAdapter.updateWeeksItems(weeks);
                     }});
-
+        subscriptions.add(sub);
     }
 
     private void setUpHeader(Calendar today, SimpleDateFormat weekDayFormatter, Locale locale) {
