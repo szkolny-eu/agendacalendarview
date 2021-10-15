@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'maven-publish'
 
 android {
     compileSdkVersion 31
@@ -43,4 +44,14 @@ dependencies {
     //implementation 'se.emilsjolander:stickylistheaders:2.7.0'
     api 'eu.szkolny:StickyListHeaders:2.7.1'
     implementation 'io.reactivex:rxjava:1.1.1'
+}
+
+project.afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+            }
+        }
+    }
 }
